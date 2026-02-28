@@ -258,7 +258,7 @@ export default function UttaranchalOnlinePage() {
               setEnquiryProgram(null);
               setEnquiryOpen(true);
             }}
-            className="bg-blue-400 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-1xl transition-all shadow-md"
+            className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md text-1xl transition-all shadow-md"
           >
             Enroll Now
           </button>
@@ -270,7 +270,7 @@ export default function UttaranchalOnlinePage() {
         <div className="max-w-screen-2xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-10 items-center w-full">
           {/* Left */}
           <div>
-            <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-3">
+            <h1 className="text-5xl md:text-4xl font-extrabold text-red-500 leading-tight mb-3">
               Uttaranchal University <br />
               <span className="text-blue-500">Online Programs</span>
             </h1>
@@ -296,7 +296,7 @@ export default function UttaranchalOnlinePage() {
                   setEnquiryProgram(null);
                   setEnquiryOpen(true);
                 }}
-                className="bg-blue-400 hover:bg-blue-600 text-white px-5 py-2.5 rounded-md text-2xl transition-all"
+                className="bg-red-400 hover:bg-red-600 text-white px-5 py-2.5 rounded-md text-2xl transition-all"
               >
                 Download Brochure
               </button>
@@ -305,7 +305,7 @@ export default function UttaranchalOnlinePage() {
                   setEnquiryProgram(null);
                   setEnquiryOpen(true);
                 }}
-                className="bg-blue-400 hover:bg-blue-600 text-white font-bold px-5 py-2.5 rounded-md text-2xl transition-all"
+                className="bg-red-500 hover:bg-red-600 text-white font-bold px-5 py-2.5 rounded-md text-2xl transition-all"
               >
                 Apply Now
               </button>
@@ -532,7 +532,7 @@ export default function UttaranchalOnlinePage() {
                       setEnquiryProgram(p.title);
                       setEnquiryOpen(true);
                     }}
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-lg text-sm transition-all"
+                    className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-lg text-sm transition-all"
                   >
                     Apply Now
                   </button>
@@ -683,9 +683,9 @@ export default function UttaranchalOnlinePage() {
               setEnquiryProgram(null);
               setEnquiryOpen(true);
             }}
-            className="bg-white text-blue-400 font-extrabold px-10 py-4 text-base hover:bg-blue-50 transition-all shadow-2xl hover:shadow-3xl"
+            className="bg-red-500 text-white font-extrabold px-10 py-4 text-base hover:bg-red-600 transition-all shadow-2xl hover:shadow-3xl"
           >
-            Enroll Now →
+            Contact Us →
           </button>
         </div>
       </section>
