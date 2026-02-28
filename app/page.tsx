@@ -8,6 +8,7 @@ import AccreditationSlider from "./components/AccreditationSlider";
 interface Program {
   title: string;
   eligibility: string;
+  fullform: string;
   duration: string;
   fee: string;
   type: "UG" | "PG";
@@ -96,6 +97,7 @@ const programs: Program[] = [
   // PG
   {
     title: "Online MBA",
+    fullform: "Master of Business Administration",
     eligibility: "Bachelor's Degree",
     duration: "2 Years",
     fee: "₹ 23,500/Semester",
@@ -104,6 +106,7 @@ const programs: Program[] = [
   },
   {
     title: "Online MCA",
+    fullform: "Master of Computer Applications",
     eligibility: "Bachelor's Degree",
     duration: "2 Years",
     fee: "₹ 23,500/Semester",
@@ -113,6 +116,7 @@ const programs: Program[] = [
   // UG
   {
     title: "Online BBA",
+    fullform: "Bachelor of Business Administration",
     eligibility: "10+2 Pass Out",
     duration: "3 Years",
     fee: "₹ 15,000/Semester",
@@ -121,6 +125,7 @@ const programs: Program[] = [
   },
   {
     title: "Online BCA",
+    fullform: "Bachelor of Computer Applications",
     eligibility: "10+2 Pass Out",
     duration: "3 Years",
     fee: "₹ 15,000/Semester",
@@ -129,6 +134,7 @@ const programs: Program[] = [
   },
   {
     title: "Online BA",
+    fullform: "Bachelor of Arts",
     eligibility: "10+2 Pass Out",
     duration: "3 Years",
     fee: "₹ 15,000/Semester",
@@ -234,12 +240,23 @@ export default function UttaranchalOnlinePage() {
     if (activeTab === "PG Courses") return p.type === "PG";
     return true;
   });
+  
+  const [expandedCols, setExpandedCols] = useState<{ [k: number]: boolean }>({});
+  function chunk<T>(arr: T[], parts: number): T[][] {
+    const out: T[][] = [];
+    const size = Math.ceil(arr.length / parts);
+    for (let i = 0; i < parts; i++) {
+      out.push(arr.slice(i * size, (i + 1) * size));
+    }
+    return out;
+  }
+  const queryColumns = chunk(topQueries, 3);
+  function toggleCol(i: number) {
+    setExpandedCols((s) => ({ ...s, [i]: !s[i] }));
+  }
 
   return (
-    <div
-      className="min-h-screen bg-white"
-      style={{ fontFamily: "'Trebuchet MS', Georgia, serif" }}
-    >
+    <div className="min-h-screen bg-white">
       {/* ─── NAVBAR ─────────────────────────────────────────────────────── */}
       <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-screen-2xl mx-auto px-6 md:px-10 py-2 flex items-center justify-between">
@@ -258,7 +275,7 @@ export default function UttaranchalOnlinePage() {
               setEnquiryProgram(null);
               setEnquiryOpen(true);
             }}
-            className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md text-1xl transition-all shadow-md"
+            className="bg-red-600 hover:bg-red-600 text-white px-3 py-2 rounded-md text-base md:text-lg transition-all shadow-md"
           >
             Enroll Now
           </button>
@@ -266,37 +283,37 @@ export default function UttaranchalOnlinePage() {
       </nav>
 
       {/* ─── HERO ───────────────────────────────────────────────────────── */}
-      <section className="bg-white pt-12 pb-16 min-h-[70vh] flex items-center">
+      <section className="bg-blue-100 pt-12 pb-16 min-h-[70vh] flex items-center">
         <div className="max-w-screen-2xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-10 items-center w-full">
           {/* Left */}
           <div>
-            <h1 className="text-5xl md:text-4xl font-extrabold text-red-500 leading-tight mb-3">
-              Uttaranchal University <br />
-              <span className="text-blue-500">Online Programs</span>
+            <h1 className="text-2xl md:text-4xl font-bold text-red-600 leading-tight mb-3">
+              Uttaranchal University <strong className="text-blue-500">Online Programs</strong> <br />
             </h1>
+<p className="text-black text-base md:text-2xl mb-5 leading-relaxed">
+             Get a Degree from Uttaranchal Online University
+            </p>
 
-            {/* Program pills */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {navTabs.map((t) => (
-                <span
-                  key={t.label}
-                  className="bg-white text-blue-400 text-1.5xl font-bold px-3 py-1 rounded-full border border-blue-200"
-                >
-                  {t.label}
-                </span>
-              ))}
+       <p className="text-black text-sm md:text-1xl mb-5 leading-relaxed">
+            Online Degree | Online Exams | 100% Placement Assistance
+            </p>     
+            {/* Mobile hero image centered between text and buttons */}
+            <div className="my-4 md:hidden">
+              <img
+                src="/hero-banner.jpg"
+                alt="Uttaranchal Campus"
+                className="w-full h-56 object-cover rounded-xl"
+              />
             </div>
 
-            <p className="text-gray-600 text-2xl mb-5 leading-relaxed">
-              Get a UGC-Entitled Degree from India&apos;s Top Ranked University
-            </p>
-            <div className="flex gap-3 mb-6">
+            
+            <div className="flex gap-3 mb-4">
               <button
                 onClick={() => {
                   setEnquiryProgram(null);
                   setEnquiryOpen(true);
                 }}
-                className="bg-red-400 hover:bg-red-600 text-white px-5 py-2.5 rounded-md text-2xl transition-all"
+                className="bg-red-600 hover:bg-red-600 text-white  px-5 py-2.5 rounded-md text-base md:text-1xl transition-all"
               >
                 Download Brochure
               </button>
@@ -305,22 +322,22 @@ export default function UttaranchalOnlinePage() {
                   setEnquiryProgram(null);
                   setEnquiryOpen(true);
                 }}
-                className="bg-red-500 hover:bg-red-600 text-white font-bold px-5 py-2.5 rounded-md text-2xl transition-all"
+                className="bg-red-500 hover:bg-red-600 text-white  px-5 py-2.5 rounded-md text-base md:text-xl transition-all"
               >
                 Apply Now
               </button>
             </div>
 
             {/* Countdown */}
-            <div className="inline-flex items-center gap-2 bg-white px-4 py-2">
-              <span className="text-blue-700 font-bold text-2xl">
+            <div className="inline-flex items-center gap-2 bg-blue-1 px-4 py-2">
+              <span className="text-red-600  text-2xl md:text-2xl">
                 Admission Closing Soon
               </span>
             </div>
           </div>
 
-          {/* Right – building image */}
-          <div className="relative">
+          {/* Right – building image (desktop only) */}
+          <div className="relative hidden md:block">
             <div className="overflow-hidden shadow-2xl">
               <img
                 src="/hero-banner.jpg"
@@ -334,16 +351,27 @@ export default function UttaranchalOnlinePage() {
 
       {/* ─── ACCREDITATIONS ─────────────────────────────────────────────── */}
       {/* Accreditation Slider Section */}
-<section className="bg-white py-20 border-y border-gray-200">
-  <div className="max-w-screen-2xl mx-auto px-6 md:px-16">
-    <h2 className="text-center text-black text-4xl md:text-5xl font-bold uppercase tracking-widest mb-4">
+<section className="bg-white py-14 md:py-20 border-y border-gray-200">
+  <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-16">
+
+    {/* Heading */}
+    <h2 className="text-center text-black 
+      text-xl sm:text-2xl md:text-4xl lg:text-5xl 
+      font-black uppercase tracking-wide md:tracking-widest 
+      mb-3 md:mb-4">
       Uttaranchal University Online
     </h2>
-    <p className="text-center text-gray-500 text-lg md:text-xl font-normal mt-2 mb-14">
+
+    {/* Sub text */}
+    <p className="text-center text-gray-700 
+      text-sm sm:text-base md:text-lg lg:text-xl 
+      font-bold 
+      mt-1 md:mt-2 mb-10 md:mb-14">
       How about getting a degree from the top ranked university?
     </p>
 
     <AccreditationSlider />
+
   </div>
 </section>
 
@@ -361,7 +389,7 @@ export default function UttaranchalOnlinePage() {
     </div>
 
     {/* Heading */}
-    <p className="text-center text-gray-800 text-2xl font-medium mb-12">
+    <p className="text-center text-gray-800 text-base md:text-2xl font-medium mb-12">
       Reasons to Pursue Online Degree from Uttaranchal Online
     </p>
 
@@ -415,7 +443,7 @@ export default function UttaranchalOnlinePage() {
               setEnquiryProgram(null);
               setEnquiryOpen(true);
             }}
-            className="mt-auto bg-red-700 hover:bg-red-800 text-white py-3 rounded-lg font-semibold transition w-full text-base"
+            className="mt-auto bg-red-600 hover:bg-red-600 text-white py-3 rounded-lg font-semibold transition w-full text-base"
           >
             Know More
           </button>
@@ -428,38 +456,43 @@ export default function UttaranchalOnlinePage() {
 
       {/* ─── ONLINE PROGRAMS ADVANTAGES ─────────────────────────────────── */}
       <section className="py-12 bg-blue-400">
-        <div className="max-w-screen-2xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-12 items-center">
-          {/* Certificate Image */}
-          <div className="flex justify-center md:justify-start">
-            <img
-              src="/online-degree-sample-format.jpg"
-              alt="Uttaranchal Degree Certificate"
-              className="w-full max-w-xl h-auto object-contain shadow-2xl rounded-md border border-blue-300"
-            />
-          </div>
+  <div className="max-w-screen-2xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-12 items-center">
 
-          {/* Advantages List */}
-          <div>
-            <h2 className="text-4xl md:text-4xl text-white mb-2">
-              Earn a UGC-Entitled, Globally Recognized Degree
-            </h2>
+    {/* Certificate Image */}
+    <div className="flex justify-center md:justify-start">
+      <img
+        src="/online-degree-sample-format.jpg"
+        alt="Uttaranchal Degree Certificate"
+        className="w-full max-w-xl h-auto object-contain shadow-2xl rounded-md border border-blue-300"
+      />
+    </div>
 
-            <p className="text-blue-100 text-2xl mb-6">
-              with Uttaranchal University Online!
-            </p>
+    {/* Advantages List */}
+    <div>
+      <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+        Earn a UGC-Entitled, Globally Recognized Degree
+      </h2>
 
-            <ul className="space-y-5 border-l-2 border-blue-200 pl-6">
-              {advantages.map((a, i) => (
-                <li key={i} className="flex flex-col gap-1">
-                  <span className="text-white text-2xl leading-relaxed">
-                    {a.text}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+      <p className="text-blue-100 text-lg md:text-2xl mb-6 font-semibold">
+        with Uttaranchal University Online!
+      </p>
+
+      {/* LIST */}
+      <ul className="
+        space-y-4
+        list-disc pl-6            /* ✅ Mobile bullets */
+        md:list-none md:pl-6      /* Desktop remove bullets */
+        md:border-l-2 md:border-blue-200
+      ">
+        {advantages.map((a, i) => (
+          <li key={i} className="text-white text-lg md:text-2xl leading-relaxed">
+            {a.text}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
 
       {/* ─── PROGRAMS GRID ──────────────────────────────────────────────── */}
       <section id="programs" className="py-16 bg-gray-50">
@@ -506,25 +539,29 @@ export default function UttaranchalOnlinePage() {
                     {p.title}
                   </div>
                   {/* UG / PG Badge */}
-                  <div className="absolute top-3 right-3 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                    {p.type} Course
-                  </div>
+                 
                 </div>
                 <div className="p-4">
                   <div className="space-y-1.5 mb-4">
-                    <div className="flex gap-2 text-xs text-gray-600">
-                      <span className="font-bold text-gray-800">
+                    <div className="flex gap-2 text-1xl text-black">
+                      
+                        
+                    
+                      <span className="bg-blue-100 text-blue-500 font-bold px-2 py-1 ">{p.fullform}</span>
+                    </div>
+                    <div className="flex gap-2 text-1xl text-black">
+                      <span className="font-bold text-black">
                         Eligibility:
                       </span>
                       <span>{p.eligibility}</span>
                     </div>
-                    <div className="flex gap-2 text-xs text-gray-600">
-                      <span className="font-bold text-gray-800">Duration:</span>
+                    <div className="flex gap-2 text-1xl text-black">
+                      <span className="font-bold text-black">Duration:</span>
                       <span>{p.duration}</span>
                     </div>
-                    <div className="flex gap-2 text-xs text-gray-600">
-                      <span className="font-bold text-gray-800">Fees:</span>
-                      <span className="text-blue-500 font-bold">{p.fee}</span>
+                    <div className="flex gap-2 text-1xl text-black">
+                      <span className="font-bold text-black">Fees:</span>
+                      <span className="text-black font-bold">{p.fee}</span>
                     </div>
                   </div>
                   <button
@@ -532,7 +569,7 @@ export default function UttaranchalOnlinePage() {
                       setEnquiryProgram(p.title);
                       setEnquiryOpen(true);
                     }}
-                    className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-lg text-sm transition-all"
+                    className="w-full bg-red-600 hover:bg-red-600 text-white font-bold py-2.5 rounded-lg text-sm transition-all"
                   >
                     Apply Now
                   </button>
@@ -590,12 +627,12 @@ export default function UttaranchalOnlinePage() {
 
               {/* Line + Dots */}
               <div className="relative flex items-center my-5">
-                <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-px bg-red-400" />
+                <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-px bg-red-600" />
                 <div className="relative w-full grid grid-cols-4">
                   {steps.map((_, i) => (
                     <div key={i} className="flex justify-center">
-                      <div className="relative z-10 w-5 h-5 rounded-full border-2 border-red-500 bg-white flex items-center justify-center">
-                        <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                      <div className="relative z-10 w-5 h-5 rounded-full border-2 border-red-600 bg-white flex items-center justify-center">
+                        <div className="w-2.5 h-2.5 rounded-full bg-red-600" />
                       </div>
                     </div>
                   ))}
@@ -683,7 +720,7 @@ export default function UttaranchalOnlinePage() {
               setEnquiryProgram(null);
               setEnquiryOpen(true);
             }}
-            className="bg-red-500 text-white font-extrabold px-10 py-4 text-base hover:bg-red-600 transition-all shadow-2xl hover:shadow-3xl"
+            className="bg-red-600 text-white font-extrabold px-10 py-4 text-base hover:bg-red-600 transition-all shadow-2xl hover:shadow-3xl"
           >
             Contact Us →
           </button>
@@ -699,20 +736,37 @@ export default function UttaranchalOnlinePage() {
             Top Query
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-6">
-            {topQueries.map((q, i) => (
-              <a
-                key={`${q}-${i}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setEnquiryProgram(null);
-                  setEnquiryOpen(true);
-                }}
-                className="text-white text-sm md:text-lg hover:underline hover:text-blue-500 transition-colors cursor-pointer truncate"
-              >
-                {q}
-              </a>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {queryColumns.map((col, ci) => {
+              const limit = 6;
+              const expanded = !!expandedCols[ci];
+              const visible = expanded ? col : col.slice(0, Math.min(limit, col.length));
+              return (
+                <div key={ci} className="flex flex-col gap-3">
+                  {visible.map((q, i) => (
+                    <a
+                      key={`${q}-${i}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEnquiryProgram(null);
+                        setEnquiryOpen(true);
+                      }}
+                      className="text-white text-sm md:text-lg hover:underline hover:text-blue-500 transition-colors cursor-pointer truncate"
+                    >
+                      {q}
+                    </a>
+                  ))}
+                  {col.length > limit && (
+                    <button
+                      onClick={() => toggleCol(ci)}
+                      className="bg-white text-left text-black-400 hover:text-white rounded-full text-1xl md:text-base px-4 py-2"
+                    >
+                      {expanded ? "See less" : "See more"}
+                    </button>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

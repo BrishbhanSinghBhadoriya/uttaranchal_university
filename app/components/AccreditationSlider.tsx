@@ -15,7 +15,7 @@ export default function AccreditationSlider() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(0);
   const animRef = useRef<number | null>(null);
-  const speed = 10.0; // px per frame — lower = slower
+  const speed = 1.5; // px per frame — lower = slower
 
   // Responsive: 3 visible on desktop, 1 on mobile
   // Each card width = 33.33% on desktop, 100% on mobile
