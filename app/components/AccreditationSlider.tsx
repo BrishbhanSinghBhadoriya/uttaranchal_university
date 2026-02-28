@@ -54,7 +54,7 @@ export default function AccreditationSlider() {
             {/* CARD */}
             <div className="
               flex flex-col justify-between items-center text-center
-              bg-white border border-gray-200
+              bg-blue-100 border border-gray-200
               rounded-2xl shadow-lg
               h-[260px] md:h-[280px]
               px-6 py-6
@@ -71,7 +71,7 @@ export default function AccreditationSlider() {
               </div>
 
               {/* Text */}
-              <p className="text-gray-700 text-base md:text-lg font-semibold leading-snug">
+              <p className="text-black text-2xl md:text-lg font-semibold leading-snug">
                 {item.name}
               </p>
 
