@@ -219,7 +219,14 @@ export default function UttaranchalOnlinePage() {
   const [enquiryOpen, setEnquiryOpen] = useState<boolean>(false);
   const [enquiryProgram, setEnquiryProgram] = useState<string | null>(null);
   const [enquirySource, setEnquirySource] = useState<string | null>(null);
-
+   
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setEnquiryProgram(null);
+    setEnquiryOpen(true);
+  }, 3000);
+  return () => clearTimeout(timer);
+}, []);
   useEffect(() => {
     const handler = (e: Event) => {
       const custom = e as CustomEvent<{ source?: string }>;
