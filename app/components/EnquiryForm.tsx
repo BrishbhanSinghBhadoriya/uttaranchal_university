@@ -14,7 +14,6 @@ export default function EnquiryForm({ onClose, defaultCourse, source, courseOpti
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [course, setCourse] = useState(defaultCourse ?? "");
-  const [message, setMessage] = useState("");
   const [stateVal, setStateVal] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -28,12 +27,13 @@ export default function EnquiryForm({ onClose, defaultCourse, source, courseOpti
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, course, message, source, state: stateVal }),
+        body: JSON.stringify({ name, email, phone, course, source, state: stateVal }),
       });
-      if (!res.ok) {
+      if (res.ok) {
+        window.location.href = "/thank-you";
+      } else {
         throw new Error("Failed");
       }
-      setDone(true);
     } catch (err: unknown) {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -80,9 +80,9 @@ export default function EnquiryForm({ onClose, defaultCourse, source, courseOpti
           ) : (
             <input value={course} onChange={(e) => setCourse(e.target.value)} placeholder="Course (optional)" style={inputStyle} />
           )}
-          <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Message (optional)" rows={3} style={{ ...inputStyle, resize: "vertical" }} />
+
           {error && <div style={{ color: "#e31e24", fontSize: 14 }}>{error}</div>}
-          <button disabled={submitting} style={submitStyle}>{submitting ? "Submitting..." : "Apply Now"}</button>
+          <button disabled={submitting} style={submitStyle}>{submitting ? "Your enquiry is submitting..." : "Apply Now"}</button>
         </form>
       ) : (
         <div style={{ textAlign: "center", padding: "20px 0" }}>

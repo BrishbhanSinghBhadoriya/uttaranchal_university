@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 import MobileStickyBar from "./components/MobileStickyBar";
+import Script from "next/script"; 
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +19,7 @@ const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
+
 export const metadata: Metadata = {
   title: "Uttaranchal University Online Admission 2026 | Apply Now",
   description:
@@ -99,6 +101,20 @@ export default function RootLayout({
         />
         {children}
         <MobileStickyBar />
+
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17973411670"
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-17973411670');
+          `}
+        </Script>
+
       </body>
     </html>
   );

@@ -8,7 +8,6 @@ export async function POST(req: NextRequest) {
     const email = (data?.email ?? "").toString().trim();
     const phone = (data?.phone ?? "").toString().trim();
     const course = (data?.course ?? "").toString().trim();
-    const message = (data?.message ?? "").toString().trim();
     const state = (data?.state ?? "").toString().trim();
     const source = (data?.source ?? "").toString().trim();
 
@@ -23,7 +22,6 @@ export async function POST(req: NextRequest) {
       email,
       phone,
       course: course || null,
-      message: message || null,
       source: source || null,
       createdAt: new Date(),
       state: state || null,
