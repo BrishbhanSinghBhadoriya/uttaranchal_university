@@ -6,10 +6,28 @@ import Script from "next/script";
 
 export default function ThankYouPage() {
   useEffect(() => {
+    // ✅ Meta Pixel Lead Event (WITH RETRY)
+    let metaAttempts = 0;
+
+    const fireMetaLead = () => {
+      if (typeof (window as any).fbq === "function") {
+        console.log("✅ Meta Pixel - Lead event fired!");
+        (window as any).fbq("track", "Lead");
+      } else if (metaAttempts < 20) {
+        metaAttempts++;
+        console.log(`⏳ Meta Pixel loading... attempt ${metaAttempts}`);
+        setTimeout(fireMetaLead, 100);
+      }
+    };
+
+    fireMetaLead();
+
+    // ✅ Google Ads Conversion Event
     let attempts = 0;
 
     const fireGoogleConversion = () => {
       if (typeof (window as any).gtag === "function") {
+        console.log("✅ Google Ads - Conversion fired!");
         (window as any).gtag("event", "conversion", {
           send_to: "AW-17973411670/H0R4CLKf_YAcENb-sfpC",
         });
@@ -17,6 +35,7 @@ export default function ThankYouPage() {
         attempts++;
         setTimeout(fireGoogleConversion, 100);
       } else {
+        console.log("🛟 Google Ads fallback - dataLayer push!");
         (window as any).dataLayer = (window as any).dataLayer || [];
         (window as any).dataLayer.push({
           event: "conversion",
@@ -26,18 +45,13 @@ export default function ThankYouPage() {
     };
 
     fireGoogleConversion();
-
-    // Fire Meta Pixel Lead conversion
-    if ((window as any).fbq) {
-      (window as any).fbq("track", "LeadNew");
-    }
   }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
       
-      {/* Load Meta Pixel Script */}
-      <Script id="fb-pixel" strategy="afterInteractive">
+      {/* ✅ Load Meta Pixel Script */}
+      <Script id="fb-pixel-thank-you" strategy="afterInteractive">
         {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
