@@ -23,10 +23,11 @@ export default function EnquiryForm({ onClose, defaultCourse, source, courseOpti
     setSubmitting(true);
     setError(null);
     try {
+      const source_url = typeof window !== "undefined" ? window.location.href : "";
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, course, source, state: stateVal }),
+        body: JSON.stringify({ name, email, phone, course, source, state: stateVal, source_url }),
       });
 
       if (res.ok) window.location.href = "/thank-you";

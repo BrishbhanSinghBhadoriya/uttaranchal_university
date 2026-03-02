@@ -10,6 +10,8 @@ export async function POST(req: NextRequest) {
     const course = (data?.course ?? "").toString().trim();
     const state = (data?.state ?? "").toString().trim();
     const source = (data?.source ?? "").toString().trim();
+    const source_url = (data?.source_url ?? "").toString().trim();
+    const source_id = "uttaranchal_online"; // Default source ID for this project
 
     if (!name || !email || !phone) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -23,6 +25,8 @@ export async function POST(req: NextRequest) {
       phone,
       course: course || null,
       source: source || null,
+      source_id,
+      source_url: source_url || null,
       createdAt: new Date(),
       state: state || null,
     };
