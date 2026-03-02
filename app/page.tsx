@@ -96,7 +96,7 @@ const advantages: Advantage[] = [
 const programs: Program[] = [
   // PG
   {
-    title: "Online MBA",
+    title: "MBA",
     fullform: "Master of Business Administration",
     eligibility: "Bachelor's Degree",
     duration: "2 Years",
@@ -105,7 +105,7 @@ const programs: Program[] = [
     image: "/MBA1.webp",
   },
   {
-    title: "Online MCA",
+    title: "MCA",
     fullform: "Master of Computer Applications",
     eligibility: "Bachelor's Degree",
     duration: "2 Years",
@@ -115,7 +115,7 @@ const programs: Program[] = [
   },
   // UG
   {
-    title: "Online BBA",
+    title: "BBA",
     fullform: "Bachelor of Business Administration",
     eligibility: "10+2 Pass Out",
     duration: "3 Years",
@@ -124,7 +124,7 @@ const programs: Program[] = [
     image: "/BBA.webp",
   },
   {
-    title: "Online BCA",
+    title: "BCA",
     fullform: "Bachelor of Computer Applications",
     eligibility: "10+2 Pass Out",
     duration: "3 Years",
@@ -133,7 +133,7 @@ const programs: Program[] = [
     image: "/BCA.webp",
   },
   {
-    title: "Online BA",
+    title: "BA",
     fullform: "Bachelor of Arts",
     eligibility: "10+2 Pass Out",
     duration: "3 Years",

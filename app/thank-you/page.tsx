@@ -6,11 +6,26 @@ import { useEffect } from "react";
 export default function ThankYouPage() {
 
   useEffect(() => {
-    if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
-      (window as any).gtag("event", "conversion", {
-        send_to: "AW-17973411670/H0R4CLKf_YAcENb-sfpC",
-      });
-    }
+    let attempts = 0;
+
+    const fireConversion = () => {
+      if (typeof (window as any).gtag === "function") {
+        (window as any).gtag("event", "conversion", {
+          send_to: "AW-17973411670/H0R4CLKf_YAcENb-sfpC",
+        });
+      } else if (attempts < 20) {
+        attempts++;
+        setTimeout(fireConversion, 100);
+      } else {
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({
+          event: "conversion",
+          send_to: "AW-17973411670/H0R4CLKf_YAcENb-sfpC",
+        });
+      }
+    };
+
+    fireConversion();
   }, []);
 
   return (
