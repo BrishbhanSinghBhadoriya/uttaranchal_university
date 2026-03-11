@@ -816,11 +816,11 @@ useEffect(() => {
             onClick={(e) => e.stopPropagation()}
           >
             <EnquiryForm
-              onClose={() => setEnquiryOpen(false)}
-              defaultCourse={enquiryProgram ?? undefined}
-              source={enquirySource ?? "UI"}
-              courseOptions={programs.map((p) => p.title)}
-            />
+  onClose={() => setEnquiryOpen(false)}
+  defaultCourse={enquiryProgram ?? undefined}
+  campaign="Google_Search"
+  courseOptions={programs.map((p) => p.title)}
+/>
           </div>
         </div>
       )}

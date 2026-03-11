@@ -818,7 +818,7 @@ useEffect(() => {
             <EnquiryForm
               onClose={() => setEnquiryOpen(false)}
               defaultCourse={enquiryProgram ?? undefined}
-              source={enquirySource ?? "UI"}
+              campaign="Meta_Search"
               courseOptions={programs.map((p) => p.title)}
             />
           </div>

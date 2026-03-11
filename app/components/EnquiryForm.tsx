@@ -5,11 +5,11 @@ import { useState } from "react";
 type Props = {
   onClose: () => void;
   defaultCourse?: string | null;
-  source?: string | null;
+  campaign?: "Meta_Search" | "Google_Search"; // ✅ NEW
   courseOptions?: string[];
 };
 
-export default function EnquiryForm({ onClose, defaultCourse, source, courseOptions }: Props) {
+export default function EnquiryForm({ onClose, defaultCourse, campaign, courseOptions }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -23,11 +23,21 @@ export default function EnquiryForm({ onClose, defaultCourse, source, courseOpti
     setSubmitting(true);
     setError(null);
     try {
-      const source_url = typeof window !== "undefined" ? window.location.href : "";
+      const source = typeof window !== "undefined" ? window.location.href : ""; // ✅ source = URL
+
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, course, source, state: stateVal, source_url }),
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          course,
+          state: stateVal,
+          source,                              // ✅ current page URL
+          campaign: campaign || "",            // ✅ "Meta_Search" ya "Google_Search"
+          university: "Uttaranchal University", // ✅ hamesha fixed
+        }),
       });
 
       if (res.ok) window.location.href = "/thank-you";
@@ -70,7 +80,7 @@ export default function EnquiryForm({ onClose, defaultCourse, source, courseOpti
         <div style={{ position: "relative" }}>
           <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Enter Phone No." required style={{ ...inputStyle, width: "100%" }} />
           <span style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", fontSize: 12, color: "#16a34a", background: "#e9fce9", padding: "2px 6px", borderRadius: 12 }}>
-            We don’t spam
+            We don't spam
           </span>
         </div>
 
