@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import clientPromise from "@/lib/mongodb";
 
 export async function POST(req: NextRequest) {
@@ -32,56 +32,64 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Please enter a valid 10-digit phone number." }, { status: 400 });
     }
 
-    const client = await clientPromise;
-    const db = client.db(dbName);
-
+    const emailLower = email.toLowerCase();
     const doc = {
       name,
-      email:      email.toLowerCase(),
+      email:      emailLower,
       phone:      cleanPhone,
       course:     course     || null,
       state:      state      || null,
-      source:     source     || null,   // ✅ current page URL
-      campaign:   campaign   || null,   // ✅ "Google_Search" ya "Meta_Search"
-      university: university,           // ✅ "Uttaranchal University"
+      source:     source     || null,
+      campaign:   campaign   || null,
+      university: university,
       createdAt:  new Date(),
     };
 
-    const result = await db.collection(collectionName).insertOne(doc);
+    const crmPayload = {
+      name,
+      email:      emailLower,
+      phone:      cleanPhone,
+      program:    course     || null,
+      state:      state      || null,
+      source:     source     || null,
+      campaign:   campaign   || null,
+      university: university,
+    };
 
-    // ✅ Send lead to CRM
-    const apiEndpoint = process.env.API_ENDPOINT;
-    if (apiEndpoint) {
+    // Response पहले भेजें; MongoDB + CRM `after` में (Next.js response के बाद चलता है)
+    after(async () => {
       try {
-        const crmResponse = await fetch(apiEndpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name,
-            email:      email.toLowerCase(),
-            phone:      cleanPhone,
-            program:    course     || null,
-            state:      state      || null,
-            source:     source     || null,   // ✅ URL
-            campaign:   campaign   || null,   // ✅ "Google_Search" ya "Meta_Search"
-            university: university,           // ✅ "Uttaranchal University"
-          }),
-        });
+        const client = await clientPromise;
+        const db = client.db(dbName);
+        await db.collection(collectionName).insertOne(doc);
 
-        if (!crmResponse.ok) {
-          const errorData = await crmResponse.json().catch(() => null);
-          console.error("CRM API Error:", {
-            status:     crmResponse.status,
-            statusText: crmResponse.statusText,
-            errorData,
+        const apiEndpoint = process.env.API_ENDPOINT;
+        if (!apiEndpoint) return;
+
+        try {
+          const crmResponse = await fetch(apiEndpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(crmPayload),
           });
-        }
-      } catch (crmErr) {
-        console.error("Failed to send lead to CRM:", crmErr);
-      }
-    }
 
-    return NextResponse.json({ ok: true, id: result.insertedId }, { status: 201 });
+          if (!crmResponse.ok) {
+            const errorData = await crmResponse.json().catch(() => null);
+            console.error("CRM API Error:", {
+              status:     crmResponse.status,
+              statusText: crmResponse.statusText,
+              errorData,
+            });
+          }
+        } catch (crmErr) {
+          console.error("Failed to send lead to CRM:", crmErr);
+        }
+      } catch (err) {
+        console.error("Background enquiry save failed:", err);
+      }
+    });
+
+    return NextResponse.json({ ok: true }, { status: 201 });
   } catch (err) {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
