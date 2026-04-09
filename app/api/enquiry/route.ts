@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
       university: university,
     };
 
-    // Response पहले भेजें; MongoDB + CRM `after` में (Next.js response के बाद चलता है)
+
     after(async () => {
       try {
         const client = await clientPromise;

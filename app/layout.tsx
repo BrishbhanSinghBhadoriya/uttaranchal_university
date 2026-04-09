@@ -421,35 +421,9 @@ export default function RootLayout({
         />
 
         {/* ══════════════════════════════════════════════════════════════════
-            GOOGLE ADS — ID: AW-17973411670
+            GOOGLE TAG (gtag.js) — ID: AW-17973411670
             ─────────────────────────────────────────────────────────────
             strategy="afterInteractive" — loads AFTER hydration.
-
-            ❌ NEVER use beforeInteractive for ad scripts.
-               It forces the browser to pause rendering until the script
-               downloads — directly destroying your LCP Core Web Vital
-               score, which Google uses as a direct ranking factor.
-
-            Conversion event fires from /thanks/page.tsx:
-            ─────────────────────────────────────────────
-            "use client";
-            import { useEffect } from "react";
-            export default function ThanksPage() {
-              useEffect(() => {
-                if (typeof window !== "undefined" &&
-                    typeof (window as any).gtag === "function") {
-                  (window as any).gtag("event", "conversion", {
-                    send_to:  "AW-17973411670/YOUR_CONVERSION_LABEL",
-                    value:    1,
-                    currency: "INR",
-                  });
-                }
-              }, []);
-              return <div>Thank You!</div>;
-            }
-            ─────────────────────────────────────────────
-            Get YOUR_CONVERSION_LABEL from:
-            Google Ads → Tools → Conversions → select → Tag setup
         ══════════════════════════════════════════════════════════════════ */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
