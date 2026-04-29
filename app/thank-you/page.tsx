@@ -49,21 +49,6 @@ export default function ThankYouPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
-      
-      {/* ✅ Google Ads Global Tag (gtag.js) */}
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=AW-17973411670"
-        strategy="afterInteractive"
-      />
-      <Script id="google-ads-config" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'AW-17973411670');
-        `}
-      </Script>
-
       {/* ✅ Load Meta Pixel Script */}
       <Script id="fb-pixel-thank-you" strategy="afterInteractive">
         {`

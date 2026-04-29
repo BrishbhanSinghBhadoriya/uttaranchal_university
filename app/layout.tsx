@@ -2,7 +2,7 @@
 // URL        : https://admissiononline.online
 // SEO Score  : 100 / 100
 // Google Ads : AW-17973411670  (afterInteractive — does NOT block LCP)
-//   → Conversion fires from /thanks/page.tsx via window.gtag()
+//   → Conversion fires from /thank-you/page.tsx via window.gtag()
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
